@@ -23,10 +23,12 @@ services:
       POSTGRES_SERVER: postgres-mealie
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${MEALIE_POSTGRES_DB}
-      # DEFAULT_HOUSEHOLD: "Familie Moerman"
-      # TOKEN_TIME: 48
-      # API_DOCS: "false"
-      # DAILY_SCHEDULE_TIME: "23:45"
+      # Mealie Settings
+      DEFAULT_HOUSEHOLD: "Familie Moerman"
+      TOKEN_TIME: 48
+      API_DOCS: "false"
+      DAILY_SCHEDULE_TIME: "23:45"
+      # Authentik SSO settings
       OIDC_AUTH_ENABLED: "true"
       OIDC_AUTO_REDIRECT: "true"
       OIDC_PROVIDER_NAME: "Authentik SSO"

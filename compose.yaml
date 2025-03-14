@@ -20,7 +20,8 @@ services:
       DB_ENGINE: postgres
       POSTGRES_USER: ${MEALIE_POSTGRES_USER}
       POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
-      POSTGRES_SERVER: postgres-mealie
+      # POSTGRES_SERVER: postgres-mealie
+      POSTGRES_SERVER: postgrescluster
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${MEALIE_POSTGRES_DB}
       # Mealie Settings
@@ -36,8 +37,9 @@ services:
       OIDC_CLIENT_ID: ${MEALIE_CLIENT_ID}
       OIDC_CLIENT_SECRET: ${MEALIE_CLIENT_SECRET}
     depends_on:
-      postgres-mealie:
-        condition: service_healthy
+      - postgres-mealie
+      # postgres-mealie:
+      #   condition: service_healthy
     networks:
       - frontend
       - backend
@@ -54,21 +56,37 @@ services:
       - "traefik.http.services.mealie.loadbalancer.server.port=9000"
       - "traefik.docker.network=frontend"
 
+  # postgres-mealie:
+  #   container_name: postgres-mealie
+  #   image: postgres:16
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /mnt/data/appdata/mealie/pgdata:/var/lib/postgresql/data:rw
+  #   environment:
+  #     POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
+  #     POSTGRES_USER: ${MEALIE_POSTGRES_USER}
+  #     PGUSER: mealie
+  #   healthcheck:
+  #     test: ["CMD", "pg_isready"]
+  #     interval: 30s
+  #     timeout: 20s
+  #     retries: 3
+  #   networks:
+  #     - backend
   postgres-mealie:
     container_name: postgres-mealie
-    image: postgres:16
-    restart: unless-stopped
-    volumes:
-      - /mnt/data/appdata/mealie/pgdata:/var/lib/postgresql/data:rw
-    environment:
-      POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
-      POSTGRES_USER: ${MEALIE_POSTGRES_USER}
-      PGUSER: mealie
-    healthcheck:
-      test: ["CMD", "pg_isready"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
+    hostname: postgres-mealie
+    image: docker.io/library/postgres:16
+    depends_on:
+      - postgrescluster
+    restart: "no"
+    command:
+      - bash
+      - -c
+      - |
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgrescluster -c "CREATE USER ${MEALIE_POSTGRES_USER} WITH PASSWORD '${MEALIE_POSTGRES_PASSWORD}';"
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgrescluster -c "CREATE DATABASE ${MEALIE_POSTGRES_DB};"
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgrescluster -c "GRANT ALL PRIVILEGES ON DATABASE ${MEALIE_POSTGRES_DB} TO ${MEALIE_POSTGRES_USER};"
     networks:
       - backend
 
@@ -76,4 +94,4 @@ networks:
   frontend:
     external: true
   backend:
-    driver: bridge
+    external: true

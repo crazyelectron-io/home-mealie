@@ -21,7 +21,7 @@ services:
       POSTGRES_USER: ${MEALIE_POSTGRES_USER}
       POSTGRES_PASSWORD: ${MEALIE_POSTGRES_PASSWORD}
       # POSTGRES_SERVER: postgres-mealie
-      POSTGRES_SERVER: postgrescluster
+      POSTGRES_SERVER: postgresdb
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${MEALIE_POSTGRES_DB}
       # Mealie Settings

@@ -74,19 +74,19 @@ services:
   #     retries: 3
   #   networks:
   #     - backend
-  # postgres-mealie:
-  #   container_name: postgres-mealie
-  #   hostname: postgres-mealie
-  #   image: docker.io/library/postgres:16
-  #   restart: "no"
-  #   command:
-  #     - bash
-  #     - -c
-  #     - |
-  #       PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgresdb -c "CREATE ROLE ${MEALIE_POSTGRES_USER} WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOREPLICATION BYPASSRLS CONNECTION LIMIT -1 PASSWORD '${MEALIE_POSTGRES_PASSWORD}';"
-  #       PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgresdb -c "CREATE DATABASE ${MEALIE_POSTGRES_DB} WITH OWNER = ${MEALIE_POSTGRES_USER} ENCODING = 'UTF8' LOCALE_PROVIDER = 'libc' CONNECTION LIMIT = -1 IS_TEMPLATE = False;"
-  #   networks:
-  #     - backend
+  postgres-mealie:
+    container_name: postgres-mealie
+    hostname: postgres-mealie
+    image: docker.io/library/postgres:16
+    restart: "no"
+    command:
+      - bash
+      - -c
+      - |
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgresdb -c "CREATE ROLE ${MEALIE_POSTGRES_USER} WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOREPLICATION BYPASSRLS CONNECTION LIMIT -1 PASSWORD '${MEALIE_POSTGRES_PASSWORD}';"
+        PGPASSWORD=${POSTGRES_PASSWORD} psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} --host postgresdb -c "CREATE DATABASE ${MEALIE_POSTGRES_DB} WITH OWNER = ${MEALIE_POSTGRES_USER} ENCODING = 'UTF8' LOCALE_PROVIDER = 'libc' CONNECTION LIMIT = -1 IS_TEMPLATE = False;"
+    networks:
+      - backend
 
 networks:
   frontend:

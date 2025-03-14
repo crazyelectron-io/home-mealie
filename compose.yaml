@@ -77,8 +77,6 @@ services:
     container_name: postgres-mealie
     hostname: postgres-mealie
     image: docker.io/library/postgres:16
-    depends_on:
-      - postgrescluster
     restart: "no"
     command:
       - bash

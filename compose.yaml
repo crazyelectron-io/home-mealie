@@ -82,9 +82,8 @@ services:
       BRING_PASSWORD: "${BRING_PASSWORD}"
       BRING_LIST_NAME: "${BRING_LIST_NAME}"
       IGNORED_INGREDIENTS: "Peper,Zout,Water,Olie,Olijfolie"
-      LOG_LEVEL: INFO
+      LOG_LEVEL: DEBUG
       HTTP_PORT: 8742
-      # HTTP_BASE_PATH: /bring
     depends_on:
       - mealie
     networks:

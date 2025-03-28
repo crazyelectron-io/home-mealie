@@ -81,7 +81,7 @@ services:
       BRING_USERNAME: "${BRING_USERNAME}"
       BRING_PASSWORD: "${BRING_PASSWORD}"
       BRING_LIST_NAME: "${BRING_LIST_NAME}"
-      IGNORED_INGREDIENTS: "Peper,Zout,Water,Olie,Olijfolie,Rijstolie"
+      IGNORED_INGREDIENTS: "Peper,Zout,Water,Olie,Olijfolie,Rijstolie,Bloem,Maizena,Suiker,Zetmeel,Azijn,Mosterd,Ketchup,Mayo,Siroop,Chilisaus,Currysaus,Ketjap manis,sambal,sambal oelek"
       LOG_LEVEL: INFO
       HTTP_PORT: 8742
     depends_on:

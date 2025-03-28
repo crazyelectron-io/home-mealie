@@ -81,8 +81,8 @@ services:
       BRING_USERNAME: "${BRING_USERNAME}"
       BRING_PASSWORD: "${BRING_PASSWORD}"
       BRING_LIST_NAME: "${BRING_LIST_NAME}"
-      IGNORED_INGREDIENTS: "Peper,Zout,Water,Olie,Olijfolie"
-      LOG_LEVEL: DEBUG
+      IGNORED_INGREDIENTS: "Peper,Zout,Water,Olie,Olijfolie,Rijstolie"
+      LOG_LEVEL: INFO
       HTTP_PORT: 8742
     depends_on:
       - mealie

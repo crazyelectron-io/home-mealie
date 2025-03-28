@@ -38,7 +38,7 @@ services:
       OIDC_CLIENT_ID: ${MEALIE_CLIENT_ID}
       OIDC_CLIENT_SECRET: ${MEALIE_CLIENT_SECRET}
     depends_on:
-      - postgres-mealie
+      - pginit-mealie
     networks:
       - frontend
       - backend
